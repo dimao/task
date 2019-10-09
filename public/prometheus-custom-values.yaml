@@ -1,0 +1,91 @@
+# Depending on which DNS solution you have installed in your cluster enable the right exporter
+coreDns:
+  enabled: false
+
+kubeDns:
+  enabled: true
+
+alertmanager:
+  alertmanagerSpec:
+    resources:
+      limits:
+        cpu: 200m
+        memory: 200Mi
+      requests:
+        cpu: 100m
+        memory: 100Mi
+    routePrefix: /alertmanager
+    externalUrl: http://task.itsys.by/alertmanager/
+    storage:
+      volumeClaimTemplate:
+        spec:
+          accessModes: ["ReadWriteOnce"]
+          resources:
+            requests:
+              storage: 1Gi
+
+prometheus:
+  prometheusOperator:
+  resources:
+    limits:
+      cpu: 400m
+      memory: 400Mi
+    requests:
+      cpu: 200m
+      memory: 200Mi
+  prometheusSpec:
+    resources:
+      limits:
+        cpu: 400m
+        memory: 400Mi
+      requests:
+        cpu: 200m
+        memory: 200Mi
+    routePrefix: /prom
+    externalUrl: http://task.itsys.by/prom/
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          accessModes: ["ReadWriteOnce"]
+          resources:
+            requests:
+              storage: 1Gi
+
+grafana:
+  resources:
+      limits:
+        cpu: 200m
+        memory: 200Mi
+      requests:
+        cpu: 100m
+        memory: 100Mi
+  grafana.ini:
+    server:
+      serve_from_sub_path: true
+      domain: task.itsys.by
+      root_url: "http://task.itsys.by/grafana/"
+  adminPassword: "Asdf422"
+  dashboardProviders:
+    dashboardproviders.yaml:
+      apiVersion: 1
+      providers:
+        - name: public
+          orgId: 1
+          folder:
+          type: file
+          disableDeletion: true
+          editable: false
+          options:
+            path: /var/lib/grafana/dashboards/public
+  dashboards:
+    public:
+      nginx-ingress:
+        gnetId: 9614
+        revision: 1
+        datasource: Prometheus
+  ingress:
+    enabled: false
+  persistence:
+    enabled: true
+    accessModes: ["ReadWriteOnce"]
+    size: 1Gi

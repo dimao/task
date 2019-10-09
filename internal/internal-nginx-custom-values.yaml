@@ -1,0 +1,10 @@
+controller:
+  service:
+    annotations:
+      cloud.google.com/load-balancer-type: "Internal"
+  metrics:
+    enabled: true
+    service:
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "10254"

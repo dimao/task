@@ -1,0 +1,22 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: internal-ingress-resource
+  annotations:
+    kubernetes.io/ingress.class: internal
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /grafana
+        backend:
+          serviceName: internal-lb-grafana
+          servicePort: 80
+      - path: /prom
+        backend:
+          serviceName: internal-lb-prom
+          servicePort: 80
+      - path: /alertmanager
+        backend:
+          serviceName: internal-lb-alertmanager
+          servicePort: 80
