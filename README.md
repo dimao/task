@@ -37,6 +37,6 @@ Connect to cluster using .ovpn
 
 Files located in "private" folder
 
-private/terraform/k8s-cluster/main.tf -- deploy vms on private vsphere cluster
-private/terraform/k8s-cluster/vsphere-virtual-machine -- module source
-private/task-kubespray - ansible role for k8s provision
+private/terraform/k8s-cluster/main.tf -- deploy vms on private vsphere cluster  
+private/terraform/k8s-cluster/vsphere-virtual-machine -- module source  
+private/task-kubespray - ansible role for k8s provision  
